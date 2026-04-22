@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Cut Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --dark: #111111;
+    --card: #181818;
+    --border: #2a2a2a;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --red: #d94f3d;
+    --green: #4caf7a;
+    --muted: #666;
+    --text: #e8e8e8;
+    --sub: #999;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 40px 24px 80px;
+    max-width: 900px;
+    margin: 0 auto;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (max-width: 500px) {
+    body { padding: 24px 16px 60px; }
+  }
+
+  /* HEADER */
+  .hero {
+    text-align: center;
+    padding: 60px 0 48px;
+    position: relative;
+  }
+  @media (max-width: 500px) {
+    .hero { padding: 40px 0 32px; }
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+  }
+  .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 88px);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  h1 span { color: var(--gold); }
+  .subtitle {
+    color: var(--sub);
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  /* STATS BAR */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 40px 0;
+  }
+  @media (max-width: 500px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+  .stat {
+    background: var(--card);
+    padding: 20px 16px;
+    text-align: center;
+  }
+  @media (max-width: 500px) {
+    .stat { padding: 16px 12px; }
+  }
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  @media (max-width: 500px) {
+    .stat-val { font-size: 26px; }
+  }
+  .stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+  @media (max-width: 500px) {
+    .stat-label { font-size: 9px; letter-spacing: 0.06em; }
+  }
+
+  /* PHASE TIMELINE */
+  .phase-bar {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    gap: 0;
+    margin: 0 0 48px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 500px) {
+    .phase-bar { grid-template-columns: 1fr; }
+    .phase.highlight { border-left: none; border-right: none; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+  }
+  .phase {
+    background: var(--card);
+    padding: 16px 20px;
+    text-align: center;
+  }
+  @media (max-width: 500px) {
+    .phase { padding: 12px 16px; }
+  }
+  .phase.highlight { background: #1a1500; border-left: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+  .phase-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 2px;
+  }
+  .phase-dates { font-size: 12px; color: var(--sub); }
+
+  /* SECTION HEADERS */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 20px;
+    flex-wrap: wrap;
+  }
+  .section-head h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .section-line {
+    flex: 1;
+    min-width: 20px;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* DAY CARDS */
+  .days-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 600px) { .days-grid { grid-template-columns: 1fr; } }
+
+  .day-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .day-card:hover { border-color: #444; }
+  .day-card.rest-day { opacity: 0.7; }
+
+  .day-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .day-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.06em;
+  }
+  .day-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: #222;
+    color: var(--sub);
+  }
+  .day-tag.upper { color: #6ba3d6; background: #0d1a26; }
+  .day-tag.lower { color: #7dc97d; background: #0d1a0d; }
+  .day-tag.rest  { color: var(--muted); }
+
+  .day-body { padding: 14px 18px; }
+
+  .cardio-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    background: #1a1500;
+    border-left: 2px solid var(--gold);
+    padding: 6px 10px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 12px;
+  }
+  .cardio-note.none { color: var(--muted); background: #161616; border-color: var(--border); }
+
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    padding: 0 0 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  th:last-child { text-align: right; }
+  td {
+    padding: 7px 0;
+    border-bottom: 1px solid #1e1e1e;
+    font-size: 13px;
+    vertical-align: top;
+  }
+  td:last-child { text-align: right; color: var(--sub); font-family: 'DM Mono', monospace; font-size: 12px; white-space: nowrap; padding-left: 8px; }
+  tr:last-child td { border-bottom: none; }
+  @media (max-width: 400px) {
+    td { font-size: 12px; }
+    td:last-child { font-size: 11px; }
+    .cardio-note { font-size: 11px; }
+  }
+
+  .change-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-family: 'DM Mono', monospace;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+  .new { background: #0d1a0d; color: var(--green); }
+  .mod { background: #1a1000; color: #e8a84c; }
+
+  /* NUTRITION */
+  .nutrition-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  @media (max-width: 500px) {
+    .nutrition-grid { grid-template-columns: 1fr; }
+  }
+  .nut-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .nut-card h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .macro-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #1e1e1e;
+    font-size: 13px;
+  }
+  .macro-row:last-child { border-bottom: none; }
+  .macro-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+  }
+
+  /* RULES */
+  .rules {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-top: 12px;
+  }
+  .rule {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1e1e1e;
+    font-size: 13px;
+  }
+  .rule:last-child { border-bottom: none; }
+  .rule-icon { color: var(--gold); font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .rule strong { color: var(--text); font-weight: 600; }
+  .rule span { color: var(--sub); }
+
+  /* DELOAD */
+  .deload-banner {
+    background: #0d1a0d;
+    border: 1px solid #2a4a2a;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-top: 12px;
+  }
+  .deload-banner h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+  .deload-banner p { color: var(--sub); font-size: 13px; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .footer span { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">9-Week Protocol · May 1 – June 20</div>
+  <h1>Wedding <span>Cut</span></h1>
+  <p class="subtitle">Optimized for fat loss · muscle retention · peak timing</p>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-val">151</div>
+    <div class="stat-label">Start (lbs)</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val">~144</div>
+    <div class="stat-label">Target (lbs)</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val">~500</div>
+    <div class="stat-label">Cal Deficit/day</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val">160g+</div>
+    <div class="stat-label">Protein/day</div>
+  </div>
+</div>
+
+<div class="phase-bar">
+  <div class="phase">
+    <div class="phase-name">Cut</div>
+    <div class="phase-dates">May 1 – June 7 (5 wks)</div>
+  </div>
+  <div class="phase highlight">
+    <div class="phase-name" style="font-size:14px;">Deload</div>
+    <div class="phase-dates" style="font-size:11px;">Wk 6</div>
+  </div>
+  <div class="phase">
+    <div class="phase-name">Maintenance</div>
+    <div class="phase-dates">June 8 – June 20 (2 wks)</div>
+  </div>
+</div>
+
+<!-- TRAINING -->
+<div class="section-head">
+  <h2>Weekly Training</h2>
+  <div class="section-line"></div>
+  <span class="label" style="margin:0;">4 lift days</span>
+</div>
+
+<div class="days-grid">
+
+  <!-- MON -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-name">Monday</div>
+      <div class="day-tag upper">Upper A</div>
+    </div>
+    <div class="day-body">
+      <div class="cardio-note">🚶 20–25 min incline walk · after lifting</div>
+      <table>
+        <tr><th>Exercise</th><th>Sets / Reps</th></tr>
+        <tr><td>Incline DB Press</td><td>3 × 8–10 <span class="change-badge mod">adj</span></td></tr>
+        <tr><td>Flat DB Press</td><td>2 × 8–10</td></tr>
+        <tr><td>Chest-Supported Row</td><td>3 × 8–10 <span class="change-badge mod">+1 set</span></td></tr>
+        <tr><td>Lat Pulldown</td><td>2 × 10–12</td></tr>
+        <tr><td>Lateral Raise</td><td>3 × 12–15</td></tr>
+        <tr><td>Triceps Pushdown</td><td>2 × 10–15</td></tr>
+        <tr><td>Cable Crunch</td><td>3 × 12–15</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- TUE -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-name">Tuesday</div>
+      <div class="day-tag lower">Lower A</div>
+    </div>
+    <div class="day-body">
+      <div class="cardio-note none">⛔ No cardio — recovery priority</div>
+      <table>
+        <tr><th>Exercise</th><th>Sets / Reps</th></tr>
+        <tr><td>Leg Press</td><td>3 × 8–10 <span class="change-badge mod">adj</span></td></tr>
+        <tr><td>Smith RDL</td><td>3 × 8–10 <span class="change-badge mod">+1 set</span></td></tr>
+        <tr><td>Leg Curl</td><td>2 × 10–12</td></tr>
+        <tr><td>Leg Extension</td><td>2 × 10–15 <span class="change-badge mod">+1 set</span></td></tr>
+        <tr><td>Calf Raise</td><td>2 × 12–15</td></tr>
+        <tr><td>Ab Machine Crunch</td><td>2 × 12–15 <span class="change-badge new">new</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- WED -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-name">Wednesday</div>
+      <div class="day-tag upper">Upper B</div>
+    </div>
+    <div class="day-body">
+      <div class="cardio-note">🚶 20–25 min incline walk · after lifting</div>
+      <table>
+        <tr><th>Exercise</th><th>Sets / Reps</th></tr>
+        <tr><td>Pullups or Pulldown</td><td>3 × 6–10</td></tr>
+        <tr><td>Machine or BB Row</td><td>3 × 8–10 <span class="change-badge mod">+1 set</span></td></tr>
+        <tr><td>Incline Machine Press</td><td>2 × 8–12 <span class="change-badge mod">+reps</span></td></tr>
+        <tr><td>Rear Delt Raise</td><td>3 × 12–15</td></tr>
+        <tr><td>DB or BB Curl</td><td>3 × 8–12 <span class="change-badge mod">+1 set</span></td></tr>
+        <tr><td>Ab Machine + Oblique</td><td>2+1 sets</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- THU -->
+  <div class="day-card rest-day">
+    <div class="day-header">
+      <div class="day-name">Thursday</div>
+      <div class="day-tag rest">Rest</div>
+    </div>
+    <div class="day-body">
+      <div class="cardio-note none">🚶 Optional 20 min easy walk only — no incline, no effort</div>
+      <p style="color:var(--muted);font-size:13px;margin-top:8px;">Full rest. Sleep, eat your protein, and let your body adapt. This is not a day to make up missed cardio.</p>
+    </div>
+  </div>
+
+  <!-- FRI -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-name">Friday</div>
+      <div class="day-tag upper">Upper C</div>
+    </div>
+    <div class="day-body">
+      <div class="cardio-note">🚶 20–25 min incline walk · after lifting</div>
+      <table>
+        <tr><th>Exercise</th><th>Sets / Reps</th></tr>
+        <tr><td>Overhead Press</td><td>3 × 8–10 <span class="change-badge mod">adj</span></td></tr>
+        <tr><td>Lateral Raise</td><td>4 × 12–15</td></tr>
+        <tr><td>Rear Delt Fly</td><td>3 × 12–15 <span class="change-badge mod">+1 set</span></td></tr>
+        <tr><td>Incline DB/Machine Press</td><td>2 × 8–12</td></tr>
+        <tr><td>Single Arm Row</td><td>3 × 8–12 <span class="change-badge mod">+1 set</span></td></tr>
+        <tr><td>Triceps Extension</td><td>2 × 10–15</td></tr>
+        <tr><td>Incline DB Curl</td><td>2 × 8–12</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- SAT -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-name">Saturday</div>
+      <div class="day-tag lower">Lower B</div>
+    </div>
+    <div class="day-body">
+      <div class="cardio-note none">⛔ No cardio — lower recovery day</div>
+      <table>
+        <tr><th>Exercise</th><th>Sets / Reps</th></tr>
+        <tr><td>Leg Press</td><td>3 × 10–12 <span class="change-badge mod">+1 set</span></td></tr>
+        <tr><td>Hip Thrust</td><td>3 × 8–12 <span class="change-badge mod">+1 set</span></td></tr>
+        <tr><td>Leg Curl</td><td>2 × 10–15</td></tr>
+        <tr><td>Leg Extension</td><td>2 × 12–15</td></tr>
+        <tr><td>Calf Raise</td><td>3 × 12–15 <span class="change-badge mod">+1 set</span></td></tr>
+        <tr><td>Captain's Chair Raise</td><td>3 × 10–15 <span class="change-badge mod">+1 set</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- SUN -->
+  <div class="day-card rest-day">
+    <div class="day-header">
+      <div class="day-name">Sunday</div>
+      <div class="day-tag rest">Active Rest</div>
+    </div>
+    <div class="day-body">
+      <div class="cardio-note">🚶 20 min easy walk or bike — keep it truly easy</div>
+      <p style="color:var(--muted);font-size:13px;margin-top:8px;">Do not turn this into a cardio session. Light movement only to stay loose and aid recovery.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- CARDIO SUMMARY -->
+<div class="section-head">
+  <h2>Cardio Budget</h2>
+  <div class="section-line"></div>
+</div>
+<div class="rules">
+  <div class="rule">
+    <div class="rule-icon">📊</div>
+    <div><strong>3 incline walks/week max</strong> <span>— Mon, Wed, Fri after lifting. Cap at 25 min. This burns ~200–250 cal each = ~600–750 cal/week from cardio.</span></div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon">⚠️</div>
+    <div><strong>Don't stack cardio on top of a 500 cal diet deficit</strong> <span>— total weekly deficit should be ~3,000–3,500 cal (1 lb). If you're eating 500 below maintenance already, 3 walks is plenty. Don't add more "just in case."</span></div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon">✅</div>
+    <div><strong>Protect Lower days from all cardio</strong> <span>— Tue & Sat are your hardest recovery days. Zero cardio, full stop.</span></div>
+  </div>
+</div>
+
+<!-- NUTRITION -->
+<div class="section-head">
+  <h2>Nutrition</h2>
+  <div class="section-line"></div>
+</div>
+<div class="nutrition-grid">
+  <div class="nut-card">
+    <h3>Lift Days</h3>
+    <div class="macro-row">Calories <span class="macro-val">~2,000</span></div>
+    <div class="macro-row">Protein <span class="macro-val">160–170g</span></div>
+    <div class="macro-row">Carbs <span class="macro-val">180–200g</span></div>
+    <div class="macro-row">Fat <span class="macro-val">55–65g</span></div>
+  </div>
+  <div class="nut-card">
+    <h3>Rest Days</h3>
+    <div class="macro-row">Calories <span class="macro-val">~1,800</span></div>
+    <div class="macro-row">Protein <span class="macro-val">160–170g</span></div>
+    <div class="macro-row">Carbs <span class="macro-val">120–140g</span></div>
+    <div class="macro-row">Fat <span class="macro-val">55–65g</span></div>
+  </div>
+</div>
+<div class="rules">
+  <div class="rule">
+    <div class="rule-icon">🥩</div>
+    <div><strong>Protein is non-negotiable</strong> <span>— 160g minimum every single day, cut or not. This is what keeps muscle on while you lose fat. If you miss calories, don't miss protein.</span></div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon">🍚</div>
+    <div><strong>Keep carbs around workouts</strong> <span>— Eat most of your carbs pre- and post-lift. This fuels performance and replenishes glycogen without being stored as fat.</span></div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon">📈</div>
+    <div><strong>Reassess at week 3</strong> <span>— If you're losing more than 1.2 lbs/week, add 100–150 cal back. Losing too fast = muscle loss. Scale should trend down, not crash.</span></div>
+  </div>
+</div>
+
+<!-- DELOAD -->
+<div class="section-head">
+  <h2>Week 6 Deload</h2>
+  <div class="section-line"></div>
+  <span class="label" style="margin:0;">~June 2–8</span>
+</div>
+<div class="deload-banner">
+  <h3>Planned Deload Week</h3>
+  <p>Keep the same weights on the bar, but drop volume by 30–40%. Do 2 sets instead of 3, cut reps to the low end of the range. This lets accumulated fatigue clear so you come into the final 2 maintenance weeks looking fuller, stronger, and less depleted. <strong style="color:var(--green)">Do not skip this — it's when the visual result actually reveals itself.</strong></p>
+</div>
+
+<!-- MAINTENANCE -->
+<div class="section-head">
+  <h2>Final 2 Weeks — Maintenance</h2>
+  <div class="section-line"></div>
+  <span class="label" style="margin:0;">June 8–20</span>
+</div>
+<div class="rules">
+  <div class="rule">
+    <div class="rule-icon">🎯</div>
+    <div><strong>Bump calories to maintenance</strong> <span>— Add back ~300–400 cal mostly from carbs. You'll look fuller and more muscular as glycogen refills. This is not gaining fat — it's strategic.</span></div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon">💪</div>
+    <div><strong>Keep lifting, reduce cardio</strong> <span>— Stay on the same split but drop cardio to 2 sessions/week max. You want to look peaked, not depleted.</span></div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon">💧</div>
+    <div><strong>Watch sodium 3 days out</strong> <span>— Reduce processed/high-sodium foods 3 days before June 20. Don't do anything dramatic. Just eat clean and drink water normally.</span></div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon">😴</div>
+    <div><strong>Sleep 7–9 hours</strong> <span>— Wedding prep will spike cortisol. Poor sleep is the fastest way to look soft and flat. Protect it.</span></div>
+  </div>
+</div>
+
+<div class="footer">
+  Wedding Cut Protocol · <span>June 20, 2025</span> · Built for fat loss, muscle retention & peak timing
+</div>
+
+</body>
+</html>
